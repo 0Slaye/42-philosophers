@@ -1,0 +1,46 @@
+#Program variables
+NAME = philosophers
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+
+#Files variables
+SRCS_FILES =	main.c
+SRCS = $(addprefix sources/, $(SRCS_FILES))
+OBJS = $(SRCS:.c=.o)
+INCLS = includes/
+
+#Extra variables
+NFILES := $(shell find ./sources -name "*.c" | wc -l)
+COUNTER := 0
+
+UPDATE = \033[0K\r
+RESET = \033[0m
+BOLD = \033[1m
+WHITE = \033[1;37m
+GREEN = \033[1;32m
+BLUE = \033[1;34m
+
+#Commands
+all : $(NAME)
+
+$(NAME) : $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(BOLD)[$(NAME)] : [$(BLUE)100$(WHITE)/$(BLUE)100$(WHITE)]$(RESET)"
+	@echo "$(BOLD)[$(NAME)] : $(GREEN)Compiled$(RESET)"
+
+%.o : %.c
+	@$(CC) $(CFLAGS) -o $@ -c $< -I$(INCLS)
+	@$(eval COUNTER := $(shell echo $$(($(COUNTER) + 1))))
+	@printf "$(BOLD)[$(NAME)] : [$(BLUE)$(shell echo $$(($(COUNTER) * 100 / $(NFILES))))$(WHITE)/$(BLUE)100$(WHITE)]$(RESET)$(UPDATE)"
+
+clean :
+	@rm -f $(OBJS)
+	@echo "$(BOLD)[$(NAME)] : $(GREEN)Objects files removed$(RESET)"
+
+fclean : clean
+	@rm -f $(NAME)
+	@echo "$(BOLD)[$(NAME)] : $(GREEN)Binary file removed$(RESET)"
+
+re : fclean all
+
+.PHONY : all clean fclean re

@@ -17,6 +17,7 @@ UPDATE = \033[0K\r
 RESET = \033[0m
 BOLD = \033[1m
 WHITE = \033[1;37m
+RED = \033[1;31m
 GREEN = \033[1;32m
 BLUE = \033[1;34m
 
@@ -25,8 +26,8 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(BOLD)[$(NAME)] : [$(BLUE)100$(WHITE)/$(BLUE)100$(WHITE)]$(RESET)"
-	@echo "$(BOLD)[$(NAME)] : $(GREEN)Compiled$(RESET)"
+	@echo "$(BOLD)[$(NAME)] : [$(BLUE)100$(WHITE)/$(BLUE)100$(WHITE)] [$(GREEN)✔️$(WHITE)]$(RESET)"
+	@echo "$(BOLD)[$(NAME)] : [$(BLUE)binary$(WHITE)] [$(GREEN)✔️$(WHITE)]$(RESET)"
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -I$(INCLS)
@@ -35,11 +36,11 @@ $(NAME) : $(OBJS)
 
 clean :
 	@rm -f $(OBJS)
-	@echo "$(BOLD)[$(NAME)] : $(GREEN)Objects files removed$(RESET)"
+	@echo "$(BOLD)[$(NAME)] : [$(BLUE)objects$(WHITE)] [$(RED)✘$(WHITE)]$(RESET)"
 
 fclean : clean
 	@rm -f $(NAME)
-	@echo "$(BOLD)[$(NAME)] : $(GREEN)Binary file removed$(RESET)"
+	@echo "$(BOLD)[$(NAME)] : [$(BLUE)binary$(WHITE)] [$(RED)✘$(WHITE)]$(RESET)"
 
 re : fclean all
 

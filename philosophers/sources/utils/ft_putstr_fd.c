@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commons.h                                          :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/09 17:17:57 by uwywijas         ###   ########.fr       */
+/*   Created: 2024/02/09 17:16:22 by uwywijas          #+#    #+#             */
+/*   Updated: 2024/02/09 17:20:49 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMONS_H
-# define COMMONS_H
+#include "commons.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <pthread.h>
-
-typedef struct s_philosopher
+void	ft_putstr_fd(char *str, int fd)
 {
-	int	id;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	eaten;
-}	t_philosopher;
+	int	i;
 
-void	philosophers(int argc, char **argv);
-void	show_philosophers(t_philosopher *philosophers, int size);
-int		ft_atoi(const char *str);
-void	ft_putstr_fd(char *str, int fd);
-
-#endif
+	i = -1;
+	while (str[++i] != '\0')
+		write(fd, &str[i], 1);
+}

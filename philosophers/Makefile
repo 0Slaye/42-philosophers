@@ -10,7 +10,10 @@ CFLAGS = -Wall -Werror -Wextra
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS_FILES =	main.c
+SRCS_FILES =	main.c \
+				philosophers.c \
+				utils/ft_atoi.c \
+				utils/ft_putstr_fd.c
 SRCS = $(addprefix sources/, $(SRCS_FILES))
 OBJS = $(SRCS:.c=.o)
 INCLS = includes/

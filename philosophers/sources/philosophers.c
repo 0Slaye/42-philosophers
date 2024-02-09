@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/09 17:28:33 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/09 19:10:58 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	threading(t_philosopher *philosophers, int number)
 		if (pthread_join(threads[i], NULL) == -1)
 			return (free(philosophers), ft_putstr_fd("pthread: error.\n", 2));
 	}
+	free(threads);
 }
 
 void	philosophers(int argc, char **argv)

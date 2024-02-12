@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 16:07:44 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/12 17:46:05 by uwywijas         ###   ########.fr       */
+/*   Created: 2024/02/12 16:06:33 by uwywijas          #+#    #+#             */
+/*   Updated: 2024/02/12 16:17:09 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-int	main(int argc, char **argv)
+void	show_philosophers(t_philosopher *philosophers, int size)
 {
-	if (argc < 5 || argc > 6)
-		return (0);
-	philosophers(argc, argv);
-	return (0);
+	int	i;
+
+	i = -1;
+	while (++i < size)
+	{
+		printf("~~~~~ [%d] ~~~~~\n", philosophers[i].id);
+		printf("Die : %d\n", philosophers[i].die);
+		printf("Eat : %d\n", philosophers[i].eat);
+		printf("Sleep : %d\n", philosophers[i].sleep);
+		printf("~~~~~~~~~~~~~~~~\n");
+	}
 }

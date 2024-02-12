@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/09 17:17:57 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:42:25 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 
 typedef struct s_philosopher
 {
-	int	id;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	eaten;
+	pthread_mutex_t	*lfork;
+	pthread_mutex_t	*rfork;
+	int				id;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				eaten;
 }	t_philosopher;
 
 void	philosophers(int argc, char **argv);

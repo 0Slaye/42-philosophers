@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/12 19:03:00 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:53:40 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,43 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	holder = ft_atoi(argv[2]);
 	if (holder < 0)
 		return (NULL);
-	result->die = holder;
+	result->die = holder * 1000;
 	holder = ft_atoi(argv[3]);
 	if (holder < 0)
 		return (NULL);
-	result->eat = holder;
+	result->eat = holder * 1000;
 	holder = ft_atoi(argv[4]);
 	if (holder < 0)
 		return (NULL);
-	result->sleep = holder;
+	result->sleep = holder * 1000;
 	return (result);
 }
 
 void	*routine(void *arg)
 {
 	t_philosopher	*philosopher;
+
 	philosopher = (t_philosopher *) arg;
-	pthread_mutex_lock(philosopher->lfork);
-	printf("%d has taken a fork\n", philosopher->id);
-	pthread_mutex_lock(philosopher->rfork);
-	printf("%d has taken a fork\n", philosopher->id);
+	if (philosopher->id % 2 == 0)
+	{
+		pthread_mutex_lock(philosopher->lfork);
+		printf("%d has taken a fork\n", philosopher->id);
+		pthread_mutex_lock(philosopher->rfork);
+		printf("%d has taken a fork\n", philosopher->id);
+	}
+	else
+	{
+		pthread_mutex_lock(philosopher->rfork);
+		printf("%d has taken a fork\n", philosopher->id);
+		pthread_mutex_lock(philosopher->lfork);
+		printf("%d has taken a fork\n", philosopher->id);
+	}
 	printf("%d is eating\n", philosopher->id);
-	usleep(philosopher->eat * 1000);
+	usleep(philosopher->eat);
 	pthread_mutex_unlock(philosopher->lfork);
 	pthread_mutex_unlock(philosopher->rfork);
 	printf("%d is sleeping\n", philosopher->id);
-	usleep(philosopher->sleep * 1000);
+	usleep(philosopher->sleep);
 	printf("%d is thinking\n", philosopher->id);
 	return (NULL);
 }

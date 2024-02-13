@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/13 16:38:02 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:24:48 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	philosopher_free(t_philosopher **philosophers, int size);
 
 void	pthreading(t_philosopher **philosophers, int size, void *p_routine);
 
-int		ft_atoi(const char *str);
+void	ft_usleep(int value);
 void	ft_putstr_fd(char *str, int fd);
+int		ft_atoi(const char *str);
 
 #endif

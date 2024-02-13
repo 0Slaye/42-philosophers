@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/12 19:56:56 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:38:02 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ typedef struct s_philosopher
 	int				eat;
 	int				sleep;
 	int				eaten;
+	int				is_dead;
 }	t_philosopher;
 
 void	philosophers(int argc, char **argv);
-void	show_philosophers(t_philosopher *philosophers, int size);
+void	philosopher_free(t_philosopher **philosophers, int size);
+
+void	pthreading(t_philosopher **philosophers, int size, void *p_routine);
+
 int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *str, int fd);
 

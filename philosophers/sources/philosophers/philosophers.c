@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/12 20:09:27 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:38:25 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,83 +35,35 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	int				holder;
 
 	result = malloc(sizeof(t_philosopher));
-	result->rfork = malloc(sizeof(pthread_mutex_t));
 	if (result == NULL)
 		return (NULL);
+	result->rfork = malloc(sizeof(pthread_mutex_t));
+	if (result->rfork == NULL)
+		return (free(result), NULL);
 	result->id = id;
 	holder = ft_atoi(argv[2]);
 	if (holder < 0)
-		return (NULL);
+		return (free(result->rfork), free(result), NULL);
 	result->die = holder * 1000;
 	holder = ft_atoi(argv[3]);
 	if (holder < 0)
-		return (NULL);
+		return (free(result->rfork), free(result), NULL);
 	result->eat = holder * 1000;
 	holder = ft_atoi(argv[4]);
 	if (holder < 0)
-		return (NULL);
+		return (free(result->rfork), free(result), NULL);
 	result->sleep = holder * 1000;
+	result->is_dead = 0;
 	return (result);
 }
 
-void	*routine(void *arg)
+void	*p_routine(void *arg)
 {
 	t_philosopher	*philosopher;
-	struct timeval	start_time;
-	struct timeval	current_time;
 
-	gettimeofday(&start_time, NULL);
 	philosopher = (t_philosopher *) arg;
-	while (start_time.tv_usec * 1000 + philosopher->die > current_time.tv_usec * 1000)
-	{
-		if (philosopher->id % 2 == 0)
-		{
-			pthread_mutex_lock(philosopher->lfork);
-			printf("%d has taken a fork\n", philosopher->id);
-			pthread_mutex_lock(philosopher->rfork);
-			printf("%d has taken a fork\n", philosopher->id);
-		}
-		else
-		{
-			pthread_mutex_lock(philosopher->rfork);
-			printf("%d has taken a fork\n", philosopher->id);
-			pthread_mutex_lock(philosopher->lfork);
-			printf("%d has taken a fork\n", philosopher->id);
-		}
-		printf("%d is eating\n", philosopher->id);
-		usleep(philosopher->eat);
-		pthread_mutex_unlock(philosopher->lfork);
-		pthread_mutex_unlock(philosopher->rfork);
-		printf("%d is sleeping\n", philosopher->id);
-		usleep(philosopher->sleep);
-		printf("%d is thinking\n", philosopher->id);
-		gettimeofday(&current_time, NULL);
-	}
-	printf("%d died\n", philosopher->id);
+	printf("%d: working!\n", philosopher->id);
 	return (NULL);
-}
-
-void	threading(t_philosopher **philosophers, int number)
-{
-	pthread_t	*threads;
-	int			i;
-
-	i = -1;
-	threads = malloc(sizeof(pthread_t) * number);
-	if (threads == NULL)
-		return ((void) NULL);
-	while (++i < number)
-	{
-		if (pthread_create(&threads[i], NULL, &routine, philosophers[i]) != 0)
-			return (free(philosophers), ft_putstr_fd("pthread: error.\n", 2));
-	}
-	i = -1;
-	while (++i < number)
-	{
-		if (pthread_join(threads[i], NULL) != 0)
-			return (free(philosophers), ft_putstr_fd("pthread: error.\n", 2));
-	}
-	free(threads);
 }
 
 void	philosophers(int argc, char **argv)
@@ -132,10 +84,9 @@ void	philosophers(int argc, char **argv)
 	{
 		philosophers[i] = new_philosopher(i + 1, argv);
 		if (philosophers[i] == NULL)
-			return (free(philosophers), (void) NULL);
+			return (philosopher_free(philosophers, i), (void) NULL);
 	}
 	if (philosophers_setup(philosophers, number) != 0)
 		return (free(philosophers), ft_putstr_fd("mutex: error.\n", 2));
-	threading(philosophers, number);
-	free(philosophers);
+	pthreading(philosophers, number, &p_routine);
 }

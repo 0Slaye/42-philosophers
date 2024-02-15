@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/13 17:02:29 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:43:21 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	philosophers(int argc, char **argv)
 	}
 	if (philosophers_setup(philosophers, number) != 0)
 		return (free(philosophers), ft_putstr_fd("mutex: error.\n", 2));
-	pthreading(philosophers, number, &p_routine);
+	pthreading(philosophers, number + 1, &p_routine);
 }

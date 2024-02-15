@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/15 15:43:21 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:51:31 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,16 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	holder = ft_atoi(argv[2]);
 	if (holder < 0)
 		return (free(result->rfork), free(result), NULL);
-	result->die = holder * 1000;
+	result->t_die = holder * 1000;
 	holder = ft_atoi(argv[3]);
 	if (holder < 0)
 		return (free(result->rfork), free(result), NULL);
-	result->eat = holder * 1000;
+	result->t_eat = holder * 1000;
 	holder = ft_atoi(argv[4]);
 	if (holder < 0)
 		return (free(result->rfork), free(result), NULL);
-	result->sleep = holder * 1000;
+	result->t_sleep = holder * 1000;
+	result->eaten = 0;
 	result->is_dead = 0;
 	return (result);
 }
@@ -62,7 +63,8 @@ void	*p_routine(void *arg)
 	t_philosopher	*philosopher;
 
 	philosopher = (t_philosopher *) arg;
-	printf("%d: working!\n", philosopher->id);
+	while (philosopher->is_dead == 0)
+		continue ;
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:31:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/15 17:58:55 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:21:06 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,48 +36,51 @@ int	is_pdead(t_philosopher **philosophers, int size, int time)
 
 void	*m_routine(void *arg)
 {
-	struct timeval	global_time;
+	struct timeval	start_time;
+	struct timeval	end_time;
 	t_master		*master;
-	int				updated_time;
+	long long		updated_time;
 	int				i;
 
 	master = arg;
-	updated_time = 0;
+	updated_time = master->init_time;
 	while (!is_pdead(master->philosophers, master->size, updated_time / 1000))
 	{
-		gettimeofday(&global_time, NULL);
-		updated_time = global_time.tv_usec;
-		printf("%d\n", updated_time);
 		i = -1;
+		gettimeofday(&start_time, NULL);
+		printf("%lld\n", updated_time);
 		while (++i < master->size)
 		{
-			//updated_time = global_time.tv_sec; //- master->init_time;
-			//printf("%d\n", updated_time);
 			if (master->philosophers[i]->eaten == 1)
 			{
-				if (global_time.tv_usec - master->init_time >= master->t_die)
+				if (updated_time >= master->t_die)
+				{
 					master->philosophers[i]->is_dead = 1;
+					break;
+				}
 			}
 		}
+		gettimeofday(&end_time, NULL);
+		updated_time += (end_time.tv_sec * 1000 + end_time.tv_usec / 1000) - (start_time.tv_sec * 1000 + start_time.tv_usec / 1000);
 	}
 	return (NULL);
 }
 
 pthread_t	*pcreator(t_philosopher **philosophers, int size, void *p_routine)
 {
+	struct timeval	t_time;
 	pthread_t		*threads;
-	struct timeval	init_time;
 	t_master		*master;
 	int				i;
 
-	gettimeofday(&init_time, NULL);
+	gettimeofday(&t_time, NULL);
 	master = malloc(sizeof(t_master));
 	if (master == NULL)
 		return (NULL);
 	master->philosophers = philosophers;
 	master->size = size - 1;
-	master->init_time = init_time.tv_usec;
 	master->t_die = philosophers[0]->t_die;
+	master->init_time = (t_time.tv_sec * 1000) + (t_time.tv_usec / 1000);
 	threads = malloc(sizeof(pthread_t) * size);
 	if (threads == NULL)
 		return (free(master), NULL);

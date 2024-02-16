@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:33:23 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 15:41:44 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:55:50 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	update_death(t_master *master, long long time)
 	i = -1;
 	while (++i < master->size)
 	{
+		master->philosophers[i]->ctime = time - master->stime;
 		if (master->philosophers[i]->eaten == 0)
 		{
 			if (time >= master->philosophers[i]->l_eaten + master->t_die)

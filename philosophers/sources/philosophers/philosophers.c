@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 15:41:26 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:59:36 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	result->eaten = 0;
 	result->is_dead = 0;
 	result->l_eaten = 0;
+	result->ctime = 0;
 	return (result);
 }
 
@@ -60,7 +61,32 @@ void	*p_routine(void *arg)
 
 	philosopher = (t_philosopher *) arg;
 	while (philosopher->is_dead == 0)
-		continue ;
+	{
+		if (philosopher->id % 2 == 0)
+		{
+			pthread_mutex_lock(philosopher->lfork);
+			printf("%d has taken a fork\n", philosopher->id);
+			pthread_mutex_lock(philosopher->rfork);
+			printf("%d has taken a fork\n", philosopher->id);
+		}
+		else
+		{
+			pthread_mutex_lock(philosopher->rfork);
+			printf("%d has taken a fork\n", philosopher->id);
+			pthread_mutex_lock(philosopher->lfork);
+			printf("%d has taken a fork\n", philosopher->id);
+		}
+		philosopher->eaten = 1;
+		printf("%d is eating\n", philosopher->id);
+		usleep(philosopher->t_eat);
+		pthread_mutex_unlock(philosopher->lfork);
+		pthread_mutex_unlock(philosopher->rfork);
+		printf("%d is sleeping\n", philosopher->id);
+		usleep(philosopher->t_sleep);
+		philosopher->l_eaten += philosopher->ctime;
+		philosopher->eaten = 0;
+		printf("%d is thinking\n", philosopher->id);
+	}
 	return (NULL);
 }
 

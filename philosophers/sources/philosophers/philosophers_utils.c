@@ -6,11 +6,53 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:06:33 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 15:33:11 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:12:47 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
+
+int	p_eat_sleep(t_philosopher *philosopher)
+{
+	if (philosopher->is_dead)
+		return (0);
+	printf("%d is eating\n", philosopher->id);
+	usleep(philosopher->t_eat);
+	pthread_mutex_unlock(philosopher->lfork);
+	pthread_mutex_unlock(philosopher->rfork);
+	if (philosopher->is_dead)
+		return (0);
+	printf("%d is sleeping\n", philosopher->id);
+	usleep(philosopher->t_sleep);
+	return (1);
+}
+
+int	take_fork(t_philosopher *philosopher, int select)
+{
+	if (select == 0)
+	{
+		pthread_mutex_lock(philosopher->lfork);
+		if (philosopher->is_dead)
+			return (0);
+		printf("%d has taken a fork\n", philosopher->id);
+		pthread_mutex_lock(philosopher->rfork);
+		if (philosopher->is_dead)
+			return (0);
+		printf("%d has taken a fork\n", philosopher->id);
+	}
+	else
+	{
+		pthread_mutex_lock(philosopher->rfork);
+		if (philosopher->is_dead)
+			return (0);
+		printf("%d has taken a fork\n", philosopher->id);
+		pthread_mutex_lock(philosopher->lfork);
+		if (philosopher->is_dead)
+			return (0);
+		printf("%d has taken a fork\n", philosopher->id);
+	}
+	return (1);
+}
 
 int	is_pdead(t_philosopher **philosophers, int size, int time)
 {

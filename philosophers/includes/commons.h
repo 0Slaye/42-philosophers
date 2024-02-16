@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 15:51:03 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:11:15 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_master
 void		philosophers(int argc, char **argv);
 void		philosopher_free(t_philosopher **philosophers, int size);
 int			is_pdead(t_philosopher **philosophers, int size, int time);
+int			take_fork(t_philosopher *philosopher, int select);
+int			p_eat_sleep(t_philosopher *philosopher);
 
 void		pthreading(t_philosopher **philosophers, int size, void *p_routine);
 long long	global_time(struct timeval time1, struct timeval time2);

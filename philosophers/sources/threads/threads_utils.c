@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:33:23 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:28:53 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:21:57 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	update_death(t_master *master, long long time)
 	i = -1;
 	while (++i < master->size)
 	{
-		master->philosophers[i]->ctime = time - master->stime;
+		master->philosophers[i]->ctime = time;
 		if (master->philosophers[i]->eaten == 0)
 		{
 			if (time >= master->philosophers[i]->l_eaten + master->t_die)
@@ -52,23 +52,29 @@ t_master	*master_setup(t_philosopher **philosophers, int size)
 	master->philosophers = philosophers;
 	master->size = size - 1;
 	master->t_die = philosophers[0]->t_die / 1000;
-	master->stime = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	master->stime = time;
 	master->n_eat = philosophers[0]->n_eat;
 	return (master);
 }
 
 long long	global_time(struct timeval stime, struct timeval etime)
 {
-	return ((etime.tv_sec * 1000 + etime.tv_usec / 1000) - (stime.tv_sec * 1000 + stime.tv_usec / 1000));
+	return ((etime.tv_sec * 1000 + etime.tv_usec / 1000) \
+	- (stime.tv_sec * 1000 + stime.tv_usec / 1000));
 }
 
-void	ft_usleep(int value)
+void	ft_usleep(int v)
 {
 	struct timeval	current_time;
-	int				end_time;
+	long long		time;
+	long long		end_time;
 
 	gettimeofday(&current_time, NULL);
-	end_time = current_time.tv_usec + value;
-	while (current_time.tv_usec < end_time)
+	end_time = current_time.tv_sec * 1000 + current_time.tv_usec / 1000 + v;
+	time = 0;
+	while (time < end_time)
+	{
 		gettimeofday(&current_time, NULL);
+		time = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	}
 }

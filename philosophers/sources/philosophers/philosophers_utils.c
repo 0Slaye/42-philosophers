@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:06:33 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 17:59:33 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:12:58 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ int	take_fork(t_philosopher *philosopher, int select)
 	{
 		pthread_mutex_lock(philosopher->lfork);
 		if (philosopher->is_dead)
-			return (0);
+			return (pthread_mutex_unlock(philosopher->lfork), 0);
 		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
 		pthread_mutex_lock(philosopher->rfork);
 		if (philosopher->is_dead)
-			return (0);
+			return (pthread_mutex_unlock(philosopher->lfork), pthread_mutex_unlock(philosopher->rfork), 0);
 		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
 	}
 	else
 	{
 		pthread_mutex_lock(philosopher->rfork);
 		if (philosopher->is_dead)
-			return (0);
+			return (pthread_mutex_unlock(philosopher->rfork), 0);
 		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
 		pthread_mutex_lock(philosopher->lfork);
 		if (philosopher->is_dead)
-			return (0);
+			return (pthread_mutex_unlock(philosopher->lfork), pthread_mutex_unlock(philosopher->rfork), 0);
 		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
 	}
 	return (1);

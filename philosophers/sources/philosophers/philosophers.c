@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 18:07:44 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:47:17 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_philosopher	*new_philosopher(int id, char **argv, int argc)
 {
 	t_philosopher	*result;
 
-	// TODO: check for argv before
 	result = malloc(sizeof(t_philosopher));
 	if (result == NULL)
 		return (NULL);

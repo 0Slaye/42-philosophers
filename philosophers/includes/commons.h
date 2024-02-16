@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 18:07:07 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:20:15 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_philosopher
 typedef struct s_master
 {
 	t_philosopher	**philosophers;
-	long long		stime;
+	struct timeval	stime;
 	int				size;
 	int				t_die;
 	int				n_eat;

@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:01:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 18:08:16 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:02:28 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	check_arg(char **argv, int argc)
 {
-	printf("%ld\n", ft_atol(argv[1]));
 	if (ft_atol(argv[1]) <= 0)
 		return (0);
 	else if (ft_atol(argv[2]) <= 0)

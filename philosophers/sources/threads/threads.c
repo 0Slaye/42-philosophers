@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:31:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 17:29:56 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:21:34 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,21 @@ int	update_n_eaten(t_master *master)
 void	*mroutine(void *arg)
 {
 	t_master		*master;
-	struct timeval	start_time;
 	struct timeval	end_time;
 	long long		time;
 	int				n_eat;
 
 	master = arg;
-	time = master->stime;
+	time = 0;
 	n_eat = 0;
 	setup_leaten(master, time);
-	gettimeofday(&end_time, NULL);
-	while (!n_eat && !is_pdead(master->philosophers, master->size, \
-	time - master->stime))
+	while (!n_eat && !is_pdead(master->philosophers, master->size, time / 1000))
 	{
-		gettimeofday(&start_time, NULL);
-		usleep(1000);
 		update_death(master, time);
 		n_eat = update_n_eaten(master);
 		gettimeofday(&end_time, NULL);
-		time += global_time(start_time, end_time);
+		time = global_time(master->stime, end_time);
 	}
-	//printf("ok\n");
 	free(master);
 	return (NULL);
 }

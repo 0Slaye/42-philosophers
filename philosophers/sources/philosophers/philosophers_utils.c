@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   philosophers_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:06:33 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/13 17:23:25 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:33:11 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-void	ft_usleep(int value)
+int	is_pdead(t_philosopher **philosophers, int size, int time)
 {
-	struct timeval	current_time;
-	int				end_time;
+	int	is_true;
+	int	i;
 
-	gettimeofday(&current_time, NULL);
-	end_time = current_time.tv_usec + value;
-	while (current_time.tv_usec < end_time)
-		gettimeofday(&current_time, NULL);
+	is_true = 0;
+	i = -1;
+	while (++i < size)
+	{
+		if (philosophers[i]->is_dead == 1)
+		{
+			is_true = 1;
+			printf("%d\t%d\tdied\n", time, philosophers[i]->id);
+			break ;
+		}
+	}
+	i = -1;
+	while (is_true && ++i < size)
+		philosophers[i]->is_dead = 1;
+	return (is_true);
 }
 
 void	philosopher_free(t_philosopher **philosophers, int size)

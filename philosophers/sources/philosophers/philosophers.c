@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/15 16:51:31 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:41:26 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	t_philosopher	*result;
 	int				holder;
 
+	// TODO: check for argv before
 	result = malloc(sizeof(t_philosopher));
 	if (result == NULL)
 		return (NULL);
@@ -42,19 +43,14 @@ t_philosopher	*new_philosopher(int id, char **argv)
 		return (free(result), NULL);
 	result->id = id;
 	holder = ft_atoi(argv[2]);
-	if (holder < 0)
-		return (free(result->rfork), free(result), NULL);
 	result->t_die = holder * 1000;
 	holder = ft_atoi(argv[3]);
-	if (holder < 0)
-		return (free(result->rfork), free(result), NULL);
 	result->t_eat = holder * 1000;
 	holder = ft_atoi(argv[4]);
-	if (holder < 0)
-		return (free(result->rfork), free(result), NULL);
 	result->t_sleep = holder * 1000;
 	result->eaten = 0;
 	result->is_dead = 0;
+	result->l_eaten = 0;
 	return (result);
 }
 

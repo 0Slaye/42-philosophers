@@ -12,8 +12,9 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRCS_FILES =	main.c \
 				philosophers/philosophers.c \
-				philosophers/threads.c \
-				philosophers/utils.c \
+				philosophers/philosophers_utils.c \
+				threads/threads.c \
+				threads/threads_utils.c \
 				utils/ft_atoi.c \
 				utils/ft_putstr_fd.c
 SRCS = $(addprefix sources/, $(SRCS_FILES))

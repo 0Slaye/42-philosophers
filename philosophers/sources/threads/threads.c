@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:31:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:34:47 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:39:41 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	update_n_eaten(t_master *master)
 
 	i = -1;
 	result = 0;
+	if (master->n_eat == -1)
+		return (0);
 	while (++i < master->size)
 	{
 		if (master->philosophers[i]->n_eaten < master->n_eat)

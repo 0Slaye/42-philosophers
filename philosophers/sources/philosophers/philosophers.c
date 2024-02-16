@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:33:47 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:36:49 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*p_routine(void *arg)
 		philosopher->n_eaten += 1;
 		if (philosopher->is_dead)
 			break ;
-		//printf("\t%d\tis thinking\n", philosopher->id);
+		printf("%d\t%d\tis thinking\n", philosopher->ctime, philosopher->id);
 	}
 	return (NULL);
 }

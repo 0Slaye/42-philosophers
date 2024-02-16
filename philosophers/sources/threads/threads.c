@@ -6,11 +6,29 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:31:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:05:08 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:34:47 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
+
+int	update_n_eaten(t_master *master)
+{
+	int	i;
+	int	result;
+
+	i = -1;
+	result = 0;
+	while (++i < master->size)
+	{
+		if (master->philosophers[i]->n_eaten < master->n_eat)
+			return (0);
+	}
+	i = -1;
+	while (++i < master->size)
+		master->philosophers[i]->is_dead = 1;
+	return (1);
+}
 
 void	*mroutine(void *arg)
 {
@@ -18,16 +36,20 @@ void	*mroutine(void *arg)
 	struct timeval	start_time;
 	struct timeval	end_time;
 	long long		time;
+	int				n_eat;
 
 	master = arg;
 	time = master->stime;
+	n_eat = 0;
 	setup_leaten(master, time);
 	gettimeofday(&end_time, NULL);
-	while (!is_pdead(master->philosophers, master->size, time - master->stime))
+	while (!n_eat && !is_pdead(master->philosophers, master->size, \
+	time - master->stime))
 	{
 		gettimeofday(&start_time, NULL);
 		usleep(1000);
 		update_death(master, time);
+		n_eat = update_n_eaten(master);
 		gettimeofday(&end_time, NULL);
 		time += global_time(start_time, end_time);
 	}

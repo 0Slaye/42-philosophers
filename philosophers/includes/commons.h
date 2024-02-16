@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:11:15 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:22:01 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_philosopher
 	long long		l_eaten;
 	int				is_dead;
 	int				ctime;
+	int				n_eat;
+	int				n_eaten;
 }	t_philosopher;
 
 typedef struct s_master
@@ -40,6 +42,7 @@ typedef struct s_master
 	long long		stime;
 	int				size;
 	int				t_die;
+	int				n_eat;
 }	t_master;
 
 void		philosophers(int argc, char **argv);

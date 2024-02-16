@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:33:23 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 15:55:50 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:28:53 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_master	*master_setup(t_philosopher **philosophers, int size)
 	master->size = size - 1;
 	master->t_die = philosophers[0]->t_die / 1000;
 	master->stime = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	master->n_eat = philosophers[0]->n_eat;
 	return (master);
 }
 

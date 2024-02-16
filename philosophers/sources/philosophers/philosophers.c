@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:12:56 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:33:47 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	philosophers_setup(t_philosopher	**philosophers, int size)
 	return (0);
 }
 
-t_philosopher	*new_philosopher(int id, char **argv)
+t_philosopher	*new_philosopher(int id, char **argv, int argc)
 {
 	t_philosopher	*result;
-	int				holder;
 
 	// TODO: check for argv before
 	result = malloc(sizeof(t_philosopher));
@@ -42,16 +41,18 @@ t_philosopher	*new_philosopher(int id, char **argv)
 	if (result->rfork == NULL)
 		return (free(result), NULL);
 	result->id = id;
-	holder = ft_atoi(argv[2]);
-	result->t_die = holder * 1000;
-	holder = ft_atoi(argv[3]);
-	result->t_eat = holder * 1000;
-	holder = ft_atoi(argv[4]);
-	result->t_sleep = holder * 1000;
+	result->t_die = ft_atoi(argv[2]) * 1000;
+	result->t_eat = ft_atoi(argv[3]) * 1000;
+	result->t_sleep = ft_atoi(argv[4]) * 1000;
 	result->eaten = 0;
 	result->is_dead = 0;
 	result->l_eaten = 0;
 	result->ctime = 0;
+	result->n_eaten = 0;
+	if (argc == 6)
+		result->n_eat = ft_atoi(argv[5]);
+	else
+		result->n_eat = -1;
 	return (result);
 }
 
@@ -68,9 +69,10 @@ void	*p_routine(void *arg)
 		p_eat_sleep(philosopher);
 		philosopher->l_eaten += philosopher->ctime;
 		philosopher->eaten = 0;
+		philosopher->n_eaten += 1;
 		if (philosopher->is_dead)
 			break ;
-		printf("%d is thinking\n", philosopher->id);
+		//printf("\t%d\tis thinking\n", philosopher->id);
 	}
 	return (NULL);
 }
@@ -81,7 +83,6 @@ void	philosophers(int argc, char **argv)
 	int				number;
 	int				i;
 
-	(void) argc;
 	i = -1;
 	number = ft_atoi(argv[1]);
 	if (number <= 0)
@@ -91,7 +92,7 @@ void	philosophers(int argc, char **argv)
 		return ((void) NULL);
 	while (++i < number)
 	{
-		philosophers[i] = new_philosopher(i + 1, argv);
+		philosophers[i] = new_philosopher(i + 1, argv, argc);
 		if (philosophers[i] == NULL)
 			return (philosopher_free(philosophers, i), (void) NULL);
 	}

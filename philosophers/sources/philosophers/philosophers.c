@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:12:18 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:36:49 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:07:44 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ t_philosopher	*new_philosopher(int id, char **argv, int argc)
 	if (result->rfork == NULL)
 		return (free(result), NULL);
 	result->id = id;
-	result->t_die = ft_atoi(argv[2]) * 1000;
-	result->t_eat = ft_atoi(argv[3]) * 1000;
-	result->t_sleep = ft_atoi(argv[4]) * 1000;
+	result->t_die = ft_atol(argv[2]) * 1000;
+	result->t_eat = ft_atol(argv[3]) * 1000;
+	result->t_sleep = ft_atol(argv[4]) * 1000;
 	result->eaten = 0;
 	result->is_dead = 0;
 	result->l_eaten = 0;
 	result->ctime = 0;
 	result->n_eaten = 0;
 	if (argc == 6)
-		result->n_eat = ft_atoi(argv[5]);
+		result->n_eat = ft_atol(argv[5]);
 	else
 		result->n_eat = -1;
 	return (result);
@@ -84,7 +84,7 @@ void	philosophers(int argc, char **argv)
 	int				i;
 
 	i = -1;
-	number = ft_atoi(argv[1]);
+	number = ft_atol(argv[1]);
 	if (number <= 0)
 		return ((void) NULL);
 	philosophers = malloc(sizeof(t_philosopher **) * number);

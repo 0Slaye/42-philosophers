@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:31:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:39:41 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:29:56 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*mroutine(void *arg)
 		gettimeofday(&end_time, NULL);
 		time += global_time(start_time, end_time);
 	}
+	//printf("ok\n");
 	free(master);
 	return (NULL);
 }

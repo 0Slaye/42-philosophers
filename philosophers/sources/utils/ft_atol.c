@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:27:52 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/09 16:40:54 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:12:42 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static int	ft_numberlen(const char *str)
 	return (i);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int	length;
-	int	positive;
-	int	result;
-	int	i;
-	int	c;
+	int		length;
+	int		positive;
+	long	result;
+	int		i;
+	int		c;
 
 	positive = 1;
 	result = 0;

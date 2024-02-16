@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 16:22:01 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:07:07 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		setup_leaten(t_master *master, long long time);
 
 void		ft_usleep(int value);
 void		ft_putstr_fd(char *str, int fd);
-int			ft_atoi(const char *str);
+long		ft_atol(const char *str);
+int			check_arg(char **argv, int argc);
 
 #endif

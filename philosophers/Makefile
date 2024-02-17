@@ -11,13 +11,14 @@ CFLAGS = -Wall -Werror -Wextra
 ################################################################################
 
 SRCS_FILES =	main.c \
+				lib/ft_atol.c \
+				lib/ft_error.c \
 				philosophers/philosophers.c \
 				philosophers/philosophers_utils.c \
 				threads/threads.c \
 				threads/threads_utils.c \
-				utils/utils.c \
-				utils/ft_atol.c \
-				utils/ft_putstr_fd.c
+				threads/routines.c \
+				threads/master.c
 SRCS = $(addprefix sources/, $(SRCS_FILES))
 OBJS = $(SRCS:.c=.o)
 INCLS = includes/

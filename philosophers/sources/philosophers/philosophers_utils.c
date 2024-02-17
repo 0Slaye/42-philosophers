@@ -5,79 +5,72 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 16:06:33 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 19:12:58 by uwywijas         ###   ########.fr       */
+/*   Created: 2024/02/17 15:30:16 by uwywijas          #+#    #+#             */
+/*   Updated: 2024/02/17 18:12:44 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-int	p_eat_sleep(t_philosopher *philosopher)
+t_philosopher	*create_philosopher(int id, char **argv)
 {
-	if (philosopher->is_dead)
-		return (0);
-	printf("%d\t%d\tis eating\n", philosopher->ctime, philosopher->id);
-	usleep(philosopher->t_eat);
-	philosopher->n_eat += 1;
-	pthread_mutex_unlock(philosopher->lfork);
-	pthread_mutex_unlock(philosopher->rfork);
-	if (philosopher->is_dead)
-		return (0);
-	printf("%d\t%d\tis sleeping\n", philosopher->ctime, philosopher->id);
-	usleep(philosopher->t_sleep);
-	return (1);
+	t_philosopher	*result;
+
+	result = malloc(sizeof(t_philosopher));
+	if (result == NULL)
+		return (NULL);
+	result->rfork = malloc(sizeof(pthread_mutex_t));
+	if (result->rfork == NULL)
+		return (free(result), NULL);
+	result->id = id;
+	result->time_die = ft_atol(argv[2]);
+	result->time_eat = ft_atol(argv[3]);
+	result->time_sleep = ft_atol(argv[4]);
+	result->total_eat = 0;
+	result->is_dead = 0;
+	result->last_eat = 0;
+	result->is_finish = 0;
+	result->time = 0;
+	return (result);
 }
 
-int	take_fork(t_philosopher *philosopher, int select)
+void	set_finish(t_philosopher	**philosophers)
 {
-	if (select == 0)
-	{
-		pthread_mutex_lock(philosopher->lfork);
-		if (philosopher->is_dead)
-			return (pthread_mutex_unlock(philosopher->lfork), 0);
-		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
-		pthread_mutex_lock(philosopher->rfork);
-		if (philosopher->is_dead)
-			return (pthread_mutex_unlock(philosopher->lfork), pthread_mutex_unlock(philosopher->rfork), 0);
-		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
-	}
-	else
-	{
-		pthread_mutex_lock(philosopher->rfork);
-		if (philosopher->is_dead)
-			return (pthread_mutex_unlock(philosopher->rfork), 0);
-		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
-		pthread_mutex_lock(philosopher->lfork);
-		if (philosopher->is_dead)
-			return (pthread_mutex_unlock(philosopher->lfork), pthread_mutex_unlock(philosopher->rfork), 0);
-		printf("%d\t%d\thas taken a fork\n", philosopher->ctime, philosopher->id);
-	}
-	return (1);
-}
-
-int	is_pdead(t_philosopher **philosophers, int size, int time)
-{
-	int	is_true;
 	int	i;
 
-	is_true = 0;
 	i = -1;
-	while (++i < size)
-	{
-		if (philosophers[i]->is_dead == 1)
-		{
-			is_true = 1;
-			printf("%d\t%d\tdied\n", time, philosophers[i]->id);
-			break ;
-		}
-	}
-	i = -1;
-	while (is_true && ++i < size)
-		philosophers[i]->is_dead = 1;
-	return (is_true);
+	while (philosophers[++i])
+		philosophers[i]->is_finish = 1;
 }
 
-void	philosopher_free(t_philosopher **philosophers, int size)
+int	f_add_forks(t_philosopher	**philosophers)
+{
+	int	i;
+
+	i = -1;
+	while (philosophers[++i])
+	{
+		if (pthread_mutex_init(philosophers[i]->rfork, NULL) != 0)
+			return (-1);
+		if (philosophers[i + 1] != NULL)
+			philosophers[i + 1]->lfork = philosophers[i]->rfork;
+		else
+			philosophers[0]->lfork = philosophers[i]->rfork;
+	}
+	return (0);
+}
+
+int	get_psize(t_philosopher **philosophers)
+{
+	int	i;
+
+	i = -1;
+	while (philosophers[++i])
+		;
+	return (i);
+}
+
+void	free_philosophers(t_philosopher **philosophers, int size)
 {
 	int	i;
 

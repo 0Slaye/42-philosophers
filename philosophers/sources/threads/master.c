@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   master.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 17:16:22 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/09 17:20:49 by uwywijas         ###   ########.fr       */
+/*   Created: 2024/02/17 16:46:01 by uwywijas          #+#    #+#             */
+/*   Updated: 2024/02/17 17:04:42 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-void	ft_putstr_fd(char *str, int fd)
+void	init_master(t_master *master, t_philosopher **philosophers)
 {
-	int	i;
+	struct timeval	start_time;
 
-	i = -1;
-	while (str[++i] != '\0')
-		write(fd, &str[i], 1);
+	gettimeofday(&start_time, NULL);
+	master->philosophers = philosophers;
+	master->start_time = start_time;
+}
+
+int	master_thread(pthread_t *threads, int size, t_master *master)
+{
+	if (pthread_create(&threads[size], NULL, mroutine, master) != 0)
+		return (-1);
+	return (0);
 }

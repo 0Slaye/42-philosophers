@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/16 19:20:15 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:12:15 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,42 +24,36 @@ typedef struct s_philosopher
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
 	int				id;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				t_eaten;
-	int				eaten;
-	long long		l_eaten;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				total_eat;
 	int				is_dead;
-	int				ctime;
-	int				n_eat;
-	int				n_eaten;
+	int				last_eat;
+	int				is_finish;
+	int				time;
 }	t_philosopher;
 
 typedef struct s_master
 {
 	t_philosopher	**philosophers;
-	struct timeval	stime;
-	int				size;
-	int				t_die;
-	int				n_eat;
+	struct timeval	start_time;
 }	t_master;
 
-void		philosophers(int argc, char **argv);
-void		philosopher_free(t_philosopher **philosophers, int size);
-int			is_pdead(t_philosopher **philosophers, int size, int time);
-int			take_fork(t_philosopher *philosopher, int select);
-int			p_eat_sleep(t_philosopher *philosopher);
+void			philosophers(int argc, char **argv);
+t_philosopher	*create_philosopher(int id, char **argv);
+int				f_add_forks(t_philosopher	**philosophers);
+void			free_philosophers(t_philosopher **philosophers, int size);
+void			set_finish(t_philosopher	**philosophers);
 
-void		pthreading(t_philosopher **philosophers, int size, void *p_routine);
-long long	global_time(struct timeval time1, struct timeval time2);
-t_master	*master_setup(t_philosopher **philosophers, int size);
-void		update_death(t_master *master, long long time);
-void		setup_leaten(t_master *master, long long time);
+void			start_threads(t_philosopher **philosophers);
+void			init_master(t_master *master, t_philosopher **philosophers);
+int				master_thread(pthread_t *threads, int size, t_master *master);
+void			*proutine(void *arg);
+void			*mroutine(void *arg);
+int				get_psize(t_philosopher **philosophers);
 
-void		ft_usleep(int value);
-void		ft_putstr_fd(char *str, int fd);
-long		ft_atol(const char *str);
-int			check_arg(char **argv, int argc);
+long			ft_atol(const char *str);
+void			ft_error(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:30:16 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:02:37 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:18:34 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	philosophers(int argc, char **argv)
 		return ((void) NULL);
 	while (++i < ft_atol(argv[1]))
 	{
-		philosophers[i] = create_philosopher(i + 1, argv);
+		philosophers[i] = create_philosopher(i + 1, argc, argv);
 		if (philosophers[i] == NULL)
 			return (free_philosophers(philosophers, i), (void) NULL);
 	}

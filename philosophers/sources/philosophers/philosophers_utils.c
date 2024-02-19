@@ -6,13 +6,13 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:30:16 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/17 18:12:44 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:17:45 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-t_philosopher	*create_philosopher(int id, char **argv)
+t_philosopher	*create_philosopher(int id, int argc, char **argv)
 {
 	t_philosopher	*result;
 
@@ -27,10 +27,13 @@ t_philosopher	*create_philosopher(int id, char **argv)
 	result->time_eat = ft_atol(argv[3]);
 	result->time_sleep = ft_atol(argv[4]);
 	result->total_eat = 0;
+	result->to_eat = -1;
 	result->is_dead = 0;
 	result->last_eat = 0;
 	result->is_finish = 0;
 	result->time = 0;
+	if (argc == 6)
+		result->to_eat = ft_atol(argv[5]);
 	return (result);
 }
 

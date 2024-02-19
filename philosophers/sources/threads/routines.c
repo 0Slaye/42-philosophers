@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:23:06 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:08:02 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:18:53 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ int	check_meals(t_master *master)
 		if (master->philosophers[i]->total_eat < master->total_eat)
 			return (0);
 	}
-	i = -1;
-	while (master->philosophers[++i])
-		master->philosophers[i]->is_finish = 1;
 	return (1);
 }
 
@@ -83,6 +80,9 @@ void	*proutine(void *arg)
 		secure_print(philosopher, "is eating\n");
 		philosopher->last_eat = philosopher->time;
 		philosopher->total_eat += 1;
+		if (philosopher->to_eat != -1 \
+		&& philosopher->total_eat >= philosopher->to_eat)
+			philosopher->is_finish = 1;
 		usleep(philosopher->time_eat * 1000);
 		pthread_mutex_unlock(philosopher->lfork);
 		pthread_mutex_unlock(philosopher->rfork);

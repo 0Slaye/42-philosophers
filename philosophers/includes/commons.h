@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:03:28 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:17:16 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philosopher
 	int				time_eat;
 	int				time_sleep;
 	int				total_eat;
+	int				to_eat;
 	int				is_dead;
 	int				last_eat;
 	int				is_finish;
@@ -42,7 +43,7 @@ typedef struct s_master
 }	t_master;
 
 void			philosophers(int argc, char **argv);
-t_philosopher	*create_philosopher(int id, char **argv);
+t_philosopher	*create_philosopher(int id, int argc, char **argv);
 int				f_add_forks(t_philosopher	**philosophers);
 void			free_philosophers(t_philosopher **philosophers, int size);
 void			set_finish(t_philosopher	**philosophers);

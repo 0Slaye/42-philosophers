@@ -13,6 +13,7 @@ CFLAGS = -Wall -Werror -Wextra
 SRCS_FILES =	main.c \
 				lib/ft_atol.c \
 				lib/ft_error.c \
+				lib/ft_strlen.c \
 				philosophers/philosophers.c \
 				philosophers/philosophers_utils.c \
 				threads/threads.c \

@@ -6,25 +6,36 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:44 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 15:08:35 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:39:16 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
+int	checker(char *value)
+{
+	if (ft_atol(value) <= 0)
+		return (1);
+	else if (ft_atol(value) > MINT_MAX)
+		return (1);
+	else if (ft_strlen(value) > 10)
+		return (1);
+	return (0);
+}
+
 int	check_arg(int argc, char **argv)
 {
-	if (ft_atol(argv[1]) <= 0)
+	if (checker(argv[1]))
 		return (0);
-	else if (ft_atol(argv[2]) <= 0)
+	else if (checker(argv[2]))
 		return (0);
-	else if (ft_atol(argv[3]) <= 0)
+	else if (checker(argv[3]))
 		return (0);
-	else if (ft_atol(argv[4]) <= 0)
+	else if (checker(argv[4]))
 		return (0);
 	if (argc == 6)
 	{
-		if (ft_atol(argv[5]) <= 0)
+		if (checker(argv[5]))
 			return (0);
 	}
 	return (1);

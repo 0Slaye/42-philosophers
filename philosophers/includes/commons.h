@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 15:01:16 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:38:58 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+# define MINT_MAX 2147483647
 
 typedef struct s_philosopher
 {
@@ -60,5 +62,6 @@ void			secure_print(t_philosopher *philosopher, char *str);
 
 long			ft_atol(const char *str);
 void			ft_error(char *str);
+int				ft_strlen(char *str);
 
 #endif

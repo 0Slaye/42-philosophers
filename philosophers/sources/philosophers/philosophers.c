@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:30:16 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:18:34 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:27:58 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	philosophers(int argc, char **argv)
 	{
 		philosophers[i] = create_philosopher(i + 1, argc, argv);
 		if (philosophers[i] == NULL)
-			return (free_philosophers(philosophers, i), (void) NULL);
+			return (free_philosophers(philosophers, i), ft_error("error\n"));
 	}
 	philosophers[ft_atol(argv[1])] = NULL;
 	if (f_add_forks(philosophers) != 0)
-		return (ft_error("mutex: error\n"));
+		return (free_philosophers(philosophers, i), ft_error("fork: error\n"));
 	if (argc == 6)
 		total_eat = ft_atol(argv[5]);
 	start_threads(philosophers, total_eat);

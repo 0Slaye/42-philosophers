@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:23:06 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 15:02:19 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:06:29 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ void	*proutine(void *arg)
 		i++;
 	}
 	if (philosopher->is_dead)
-		printf("%d\t%d\tdie\n", philosopher->time, philosopher->id);
+		printf("%d\t%d\tdied\n", philosopher->time, philosopher->id);
 	return (NULL);
 }

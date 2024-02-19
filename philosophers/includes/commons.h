@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:17:16 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:58:11 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				master_thread(pthread_t *threads, int size, t_master *master);
 void			*proutine(void *arg);
 void			*mroutine(void *arg);
 int				get_psize(t_philosopher **philosophers);
-void			solver(t_philosopher *philosopher);
+void			solver(t_philosopher *philosopher, int);
 void			secure_print(t_philosopher *philosopher, char *str);
 
 long			ft_atol(const char *str);

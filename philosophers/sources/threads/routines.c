@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:23:06 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 13:47:44 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:58:51 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,29 @@ void	*mroutine(void *arg)
 void	*proutine(void *arg)
 {
 	t_philosopher	*philosopher;
+	int				i;
 
 	philosopher = arg;
+	i = 0;
 	while (!philosopher->is_dead && !philosopher->is_finish)
 	{
-		solver(philosopher);
-		secure_print(philosopher, "is eating\n");
-		philosopher->last_eat = philosopher->time;
-		philosopher->total_eat += 1;
-		if (philosopher->to_eat != -1 \
-		&& philosopher->total_eat >= philosopher->to_eat)
-			philosopher->is_finish = 1;
-		usleep(philosopher->time_eat * 1000);
-		pthread_mutex_unlock(philosopher->lfork);
-		pthread_mutex_unlock(philosopher->rfork);
-		secure_print(philosopher, "is sleeping\n");
-		usleep(philosopher->time_sleep * 1000);
-		secure_print(philosopher, "is thinking\n");
+		solver(philosopher, i);
+		if (!(philosopher->rfork == philosopher->lfork))
+		{
+			secure_print(philosopher, "is eating\n");
+			philosopher->last_eat = philosopher->time;
+			philosopher->total_eat += 1;
+			if (philosopher->to_eat != -1 \
+			&& philosopher->total_eat >= philosopher->to_eat)
+				philosopher->is_finish = 1;
+			usleep(philosopher->time_eat * 1000);
+			pthread_mutex_unlock(philosopher->lfork);
+			pthread_mutex_unlock(philosopher->rfork);
+			secure_print(philosopher, "is sleeping\n");
+			usleep(philosopher->time_sleep * 1000);
+			secure_print(philosopher, "is thinking\n");
+		}
+		i++;
 	}
 	if (philosopher->is_dead)
 		printf("%d\t%d\tdie\n", philosopher->time, philosopher->id);

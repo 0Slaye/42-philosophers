@@ -6,18 +6,22 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:30:49 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 13:47:50 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:57:34 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commons.h"
 
-void	solver(t_philosopher *philosopher)
+void	solver(t_philosopher *philosopher, int i)
 {
 	if (philosopher->id % 2 == 0)
 		usleep(1 * 1000);
+	if (philosopher->rfork == philosopher->lfork && i > 0)
+		return ;
 	pthread_mutex_lock(philosopher->lfork);
 	secure_print(philosopher, "has taken a fork\n");
+	if (philosopher->rfork == philosopher->lfork)
+		return ;
 	pthread_mutex_lock(philosopher->rfork);
 	secure_print(philosopher, "has taken a fork\n");
 }

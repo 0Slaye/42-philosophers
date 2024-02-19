@@ -16,8 +16,8 @@ SRCS_FILES =	main.c \
 				philosophers/philosophers.c \
 				philosophers/philosophers_utils.c \
 				threads/threads.c \
-				threads/threads_utils.c \
 				threads/routines.c \
+				threads/routines_utils.c \
 				threads/master.c
 SRCS = $(addprefix sources/, $(SRCS_FILES))
 OBJS = $(SRCS:.c=.o)

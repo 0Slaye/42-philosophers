@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:55:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 12:00:36 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:24:38 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	join_threads(pthread_t *threads, t_philosopher **philosophers)
 			return (-1);
 		}
 	}
+	if (pthread_join(threads[i], NULL) != 0)
+	{
+		free_philosophers(philosophers, get_psize(philosophers));
+		return (-1);
+	}
 	return (0);
 }
 
@@ -68,6 +73,7 @@ void	start_threads(t_philosopher **philosophers, int total_eat)
 	if (threads == NULL)
 		return (ft_error("thread: error.\n"));
 	if (join_threads(threads, philosophers) != 0)
-		return (ft_error("thread: error.\n"));
+		return (free(master), free(threads), ft_error("thread: error.\n"));
+	free(master);
 	free(threads);
 }

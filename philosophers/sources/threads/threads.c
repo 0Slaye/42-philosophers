@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 15:55:13 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/17 16:41:28 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:00:36 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	join_threads(pthread_t *threads, t_philosopher **philosophers)
 	return (0);
 }
 
-void	start_threads(t_philosopher **philosophers)
+void	start_threads(t_philosopher **philosophers, int total_eat)
 {
 	t_master	*master;
 	pthread_t	*threads;
@@ -63,7 +63,7 @@ void	start_threads(t_philosopher **philosophers)
 	master = malloc(sizeof(t_master));
 	if (master == NULL)
 		return (ft_error("malloc: error\n"));
-	init_master(master, philosophers);
+	init_master(master, philosophers, total_eat);
 	threads = create_threads(philosophers, master);
 	if (threads == NULL)
 		return (ft_error("thread: error.\n"));

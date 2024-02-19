@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:00 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 09:51:17 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:03:28 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_master
 {
 	t_philosopher	**philosophers;
 	struct timeval	start_time;
+	int				total_eat;
 }	t_master;
 
 void			philosophers(int argc, char **argv);
@@ -46,8 +47,9 @@ int				f_add_forks(t_philosopher	**philosophers);
 void			free_philosophers(t_philosopher **philosophers, int size);
 void			set_finish(t_philosopher	**philosophers);
 
-void			start_threads(t_philosopher **philosophers);
-void			init_master(t_master *master, t_philosopher **philosophers);
+void			start_threads(t_philosopher **philosophers, int total_eat);
+void			init_master(t_master *master, t_philosopher **philosophers, \
+int total_eat);
 int				master_thread(pthread_t *threads, int size, t_master *master);
 void			*proutine(void *arg);
 void			*mroutine(void *arg);

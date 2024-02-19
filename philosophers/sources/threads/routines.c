@@ -6,7 +6,7 @@
 /*   By: uwywijas <uwywijas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 16:23:06 by uwywijas          #+#    #+#             */
-/*   Updated: 2024/02/19 14:58:51 by uwywijas         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:02:19 by uwywijas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ void	*mroutine(void *arg)
 	return (NULL);
 }
 
+void	proutine_bis(t_philosopher *philosopher)
+{
+	secure_print(philosopher, "is eating\n");
+	philosopher->last_eat = philosopher->time;
+	philosopher->total_eat += 1;
+	if (philosopher->to_eat != -1 \
+	&& philosopher->total_eat >= philosopher->to_eat)
+		philosopher->is_finish = 1;
+	usleep(philosopher->time_eat * 1000);
+	pthread_mutex_unlock(philosopher->lfork);
+	pthread_mutex_unlock(philosopher->rfork);
+	secure_print(philosopher, "is sleeping\n");
+	usleep(philosopher->time_sleep * 1000);
+	secure_print(philosopher, "is thinking\n");
+}
+
 void	*proutine(void *arg)
 {
 	t_philosopher	*philosopher;
@@ -80,20 +96,7 @@ void	*proutine(void *arg)
 	{
 		solver(philosopher, i);
 		if (!(philosopher->rfork == philosopher->lfork))
-		{
-			secure_print(philosopher, "is eating\n");
-			philosopher->last_eat = philosopher->time;
-			philosopher->total_eat += 1;
-			if (philosopher->to_eat != -1 \
-			&& philosopher->total_eat >= philosopher->to_eat)
-				philosopher->is_finish = 1;
-			usleep(philosopher->time_eat * 1000);
-			pthread_mutex_unlock(philosopher->lfork);
-			pthread_mutex_unlock(philosopher->rfork);
-			secure_print(philosopher, "is sleeping\n");
-			usleep(philosopher->time_sleep * 1000);
-			secure_print(philosopher, "is thinking\n");
-		}
+			proutine_bis(philosopher);
 		i++;
 	}
 	if (philosopher->is_dead)
